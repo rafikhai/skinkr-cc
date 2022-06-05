@@ -12,8 +12,6 @@ from io import BytesIO
 # import pandas as pd
 
 
-print("complete")
-
 app = Flask(__name__)
 
 @app.route("/", methods=["GET", "POST"])
@@ -95,7 +93,6 @@ def index():
                 class_dict = {v : k for k, v in train_generator.class_indices.items()}
                 imagefix = tf.image.resize(imagefix, [224, 224])
                 x = keras.preprocessing.image.img_to_array(imagefix)/255
-                print(type(x))
                 x = np.expand_dims(x, axis=0)
                 predict = model.predict(x)
                 class_prediction = np.argmax(predict)
@@ -109,4 +106,4 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
